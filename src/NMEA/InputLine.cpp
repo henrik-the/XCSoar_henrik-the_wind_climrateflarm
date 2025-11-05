@@ -23,7 +23,13 @@ NMEAInputLine::ReadBearing(Angle &value_r) noexcept
   if (!ReadChecked(value))
     return false;
 
-  if (value <= -1 || value >= 361)
+  // Normalize any input to [0, 360)
+  value = std::fmod(value + 360.0, 360.0);
+  if (value < 0)
+    value += 360.0;
+
+  // Final sanity check
+  if (value < 0 || value >= 360)
     return false;
 
   value_r = Angle::Degrees(value).AsBearing();
