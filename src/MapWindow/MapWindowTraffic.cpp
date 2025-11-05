@@ -43,7 +43,7 @@ DrawFlarmTraffic(Canvas &canvas, const WindowProjection &projection,
     if (traffic.HasName() && !StringIsEmpty(traffic.name)) {
       // Draw the name 16 points below the icon
       auto sc_name = sc;
-      sc_name.y -= Layout::Scale(20);
+      sc_name.y -= Layout::Scale(16);
 
       TextInBox(canvas, traffic.name, sc_name,
                 mode, projection.GetScreenRect());
@@ -59,6 +59,26 @@ DrawFlarmTraffic(Canvas &canvas, const WindowProjection &projection,
       TextInBox(canvas,
                 FormatUserVerticalSpeed(traffic.climb_rate_avg30s, false),
                 sc_av, mode,
+                projection.GetScreenRect());
+    }
+
+    if (!fading && traffic.relative_altitude) {
+      // If average climb data available draw it to the canvas
+
+      // Draw the average climb value above the icon
+      auto sc_ra = sc;
+      if (traffic.climb_rate_avg30s >= 0.1) {
+        sc_ra.y += Layout::Scale(13);
+      }
+      else {
+        sc_ra.y += Layout::Scale(5);
+      }
+      
+      BasicStringBuffer<TCHAR, 32> buffer;
+      FormatRelativeUserAltitude(traffic.relative_altitude, buffer.data(), true);
+      TextInBox(canvas,
+                buffer,
+                sc_ra, mode,
                 projection.GetScreenRect());
     }
   }
