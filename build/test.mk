@@ -104,6 +104,7 @@ TEST_NAMES = \
 	TestMETARParser \
 	TestIGCParser \
 	TestStrings TestUTF8 \
+	TestInputConfig \
 	TestCRC16 TestCRC8 \
 	TestUnitsFormatter \
 	TestGeoPointFormatter \
@@ -511,6 +512,16 @@ TEST_UTF8_SOURCES = \
 	$(TEST_SRC_DIR)/TestUTF8.cpp
 TEST_UTF8_DEPENDS = UTIL
 $(eval $(call link-program,TestUTF8,TEST_UTF8))
+
+TEST_INPUT_CONFIG_SOURCES = \
+	$(TEST_SRC_DIR)/tap.c \
+	$(SRC)/Input/InputConfig.cpp \
+	$(SRC)/Menu/MenuData.cpp \
+	$(TEST_SRC_DIR)/FakeLogFile.cpp \
+	$(TEST_SRC_DIR)/TestInputConfig.cpp
+TEST_INPUT_CONFIG_CPPFLAGS = $(SCREEN_CPPFLAGS)
+TEST_INPUT_CONFIG_DEPENDS = IO OS UTIL
+$(eval $(call link-program,TestInputConfig,TEST_INPUT_CONFIG))
 
 TEST_POLARS_SOURCES = \
 	$(SRC)/Polar/Shape.cpp \
@@ -2248,18 +2259,16 @@ RUN_PROFILE_LIST_DIALOG_DEPENDS = PROFILE FORM WIDGET DATA_FIELD SCREEN EVENT RE
 $(eval $(call link-program,RunProfileListDialog,RUN_PROFILE_LIST_DIALOG))
 
 PLAY_TONE_SOURCES = \
-	$(SRC)/Hardware/DisplayDPI.cpp \
-	$(TEST_SRC_DIR)/FakeLogFile.cpp \
+	$(MORE_SCREEN_SOURCES) \
 	$(TEST_SRC_DIR)/PlayTone.cpp
 PLAY_TONE_DEPENDS = AUDIO MATH SCREEN EVENT ASYNC THREAD OS IO UTIL
 $(eval $(call link-program,PlayTone,PLAY_TONE))
 
 PLAY_VARIO_SOURCES = \
+	$(MORE_SCREEN_SOURCES) \
 	$(SRC)/Formatter/NMEAFormatter.cpp \
-	$(SRC)/Hardware/DisplayDPI.cpp \
 	$(SRC)/TransponderCode.cpp \
 	$(DEBUG_REPLAY_SOURCES) \
-	$(TEST_SRC_DIR)/FakeLogFile.cpp \
 	$(TEST_SRC_DIR)/PlayVario.cpp
 PLAY_VARIO_LDADD = $(AUDIO_LDADD) $(SCREEN_LDADD) $(EVENT_LDADD)
 PLAY_VARIO_DEPENDS = $(DEBUG_REPLAY_DEPENDS) AUDIO GEO MATH SCREEN EVENT ASYNC THREAD OS TIME UTIL
