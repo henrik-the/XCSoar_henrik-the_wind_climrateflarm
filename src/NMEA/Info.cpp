@@ -149,6 +149,10 @@ NMEAInfo::Reset() noexcept
 
   stall_ratio_available.Clear();
 
+  custom_box_available.Clear();
+
+
+
   // XXX StallRatio
 
   device.Clear();
@@ -345,6 +349,14 @@ NMEAInfo::Complement(const NMEAInfo &add) noexcept
   flarm.Complement(add.flarm);
 
   engine.Complement(add.engine);
+
+  // Custom NMEA infobox fields
+  if (!custom_box_available && add.custom_box_available){
+      custom_box_title = add.custom_box_title;
+      custom_box_value = add.custom_box_value;
+      custom_box_last_update = add.custom_box_last_update;
+  }
+
 
 #ifdef ANDROID
   glink_data.Complement(add.glink_data);

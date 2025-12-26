@@ -18,6 +18,7 @@
 #include "EngineState.hpp"
 #include "FLARM/Data.hpp"
 #include "Geo/SpeedVector.hpp"
+#include "util/StaticString.hxx"
 
 #ifdef ANDROID
 #include "GliderLink/GliderLinkData.hpp"
@@ -339,6 +340,14 @@ struct NMEAInfo {
   DeviceInfo secondary_device;
 
   FlarmData flarm;
+
+  // --- Custom generic infobox data from $PIFBX ---
+  StaticString<32> custom_box_title;
+  StaticString<32> custom_box_value;
+  Validity custom_box_available;
+  double custom_box_last_update;
+
+
 
 #ifdef ANDROID
   GliderLinkData glink_data;

@@ -23,6 +23,7 @@
 #include "InfoBoxes/Content/Airspace.hpp"
 #include "InfoBoxes/Content/Radio.hpp"
 #include "InfoBoxes/Content/Engine.hpp"
+#include "InfoBoxes/Content/CustomNMEA.hpp"
 
 #include "util/Macros.hpp"
 #include "Language/Language.hpp"
@@ -1166,6 +1167,14 @@ static constexpr MetaData meta_data[] = {
     N_("Altn 2 AltD"),
     N_("Arrival altitude at the second-best alternate landing location relative to the safety arrival height."),
     IBFHelperInt<InfoBoxContentAlternateAltDiff, 1>::Create,
+  },
+
+  // e_CustomNMEA
+  {
+    N_("Custom NMEA"), 
+    N_("PIFBX"), 
+    N_("Zeigt Titel+Wert aus $PIFBX,<title>,<value>"), 
+    IBFHelper<InfoBoxContentCustomNMEA>::Create,
   },
 
 };

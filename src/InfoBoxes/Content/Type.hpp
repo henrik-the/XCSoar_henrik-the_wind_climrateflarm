@@ -150,6 +150,7 @@ namespace InfoBoxFactory
     e_Alternate_1_AltDiff, /* Arrival altitude at the best alternate landing location relative to the safety arrival height */
     e_Alternate_2_AltDiff, /* Arrival altitude at the second-best alternate landing location relative to the safety arrival height */
     /* 130 */
+    e_CustomNMEA, /* Custom NMEA Infobox*/
     e_NUM_TYPES /* Last item */
   };
 
